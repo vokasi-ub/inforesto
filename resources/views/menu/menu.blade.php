@@ -5,24 +5,25 @@
     <!-- Content Header (Page header) -->
     <!-- Content Header (Page header) -->
     <section class="content-header">
-<h1>Data Karyawan</h1>
+<h1>Data Menu</h1>
 <br>
      <div class="box box-danger">
             <div class="box-header with-border">
-              <h3 class="box-title">Form Search</h3>
+              <h3 class="box-title">Fom Search</h3>
             </div>
-            <form action="{{ url('query') }}" method="GET">
+            <form action="{{ url()->current() }}" >
 
             <div class="box-body">
               <div class="row">
                 <div class="col-xs-5">
                   <div class="input-group">
-                <div class="input-group-btn">
-                  <button type="submit" class="btn btn-danger">Cari</button>
-                </div>
+              
                 <!-- /btn-group -->
                 
-                <input type="text" class="form-control" name="cari" placeholder="Search Data Kategori..">
+                <input type="text" class="form-control" name="keyword" placeholder="Search Data Hidangan..">
+                  <div class="input-group-btn">
+                  <button type="submit" class="btn btn-danger">Cari</button>
+                </div>
               </div>
                 </div>
               </div>
@@ -34,7 +35,7 @@
 
           <div class="box box-danger">
             <div class="box-header">
-              <h3 class="box-title">Data Karyawan</h3>
+              <h3 class="box-title">Data Menu</h3>
             </div>
             
             <div class="box-body">
@@ -48,23 +49,23 @@
               <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">Masukkan Data Karyawan</h4>
+                <h4 class="modal-title">Masukkan Menu Makanan</h4>
               </div>
-              <form class="form-horizontal" action="/inputdata/store" method="post">
+              <form class="form-horizontal" action="/inputdatamenu/store" method="post">
               {{csrf_field()}}
               <div class="box-body">
                 <div class="form-group">
-                  <label for="inputEmail3" class="col-sm-2 control-label">Karyawan</label>
+                  <label for="inputEmail3" class="col-sm-2 control-label">Hidangan</label>
 
                   <div class="col-sm-10">
-                    <input type="text" class="form-control" id="inputEmail3" placeholder="Karyawan" name="karyawan">
+                    <input type="text" class="form-control" id="inputEmail3" placeholder="Hidangan" name="kategori">
                   </div>
                 </div>
                 <div class="form-group">
-                  <label for="inputPassword3" class="col-sm-2 control-label">Jumlah </label>
+                  <label for="inputPassword3" class="col-sm-2 control-label">Deskripsi</label>
 
                   <div class="col-sm-10">
-                    <input type="text" class="form-control" id="inputPassword3" placeholder="Jumlah" name="jumlah">
+                    <input type="text" class="form-control" id="inputPassword3" placeholder="Deskripsi" name="deskripsi">
                   </div>
                 </div>
                 <div class="form-group">
@@ -89,18 +90,18 @@
         </form>
             <table class="table table-bordered table-striped">
                 <tr>
-                <th>Karyawan</th>
-                <th>Jumlah</th>
+                <th>Hidangan</th>
+                <th>Deskripsi</th>
                 <th>Aksi</th>
                 </tr>
 
-                @foreach($categories as $data)
+                @foreach($menu as $menu)
                 <tr>
-                <td>{{$data->karyawan}}</td>
-                <td>{{$data->jumlah}}</td>
+                <td>{{$menu->kategori}}</td>
+                <td>{{$menu->deskripsi}}</td>
                     <td>
-                      <a href="/edit_karyawan/edit/{{ $data->id }}">Edit</a> | 
-                        <a href="/hapus/destroy/{{ $data->id }}">Hapus</a>
+                      <a href="/menuedit/edit/{{ $menu->id }}">Edit</a> | 
+                        <a href="/delete/menu/{{ $menu->id }}">Hapus</a>
                     </td>
                 </tr>
                 @endforeach

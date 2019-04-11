@@ -5,13 +5,13 @@
     <!-- Content Header (Page header) -->
     <!-- Content Header (Page header) -->
     <section class="content-header">
-<h1>Data Jabatan</h1>
+<h1>Data Karyawan</h1>
 <br>
      <div class="box box-danger">
             <div class="box-header with-border">
               <h3 class="box-title">Form Search</h3>
             </div>
-            <form action="{{ url('query') }}" method="GET">
+            <form action="{{ url()->current() }}" >
 
             <div class="box-body">
               <div class="row">
@@ -22,7 +22,7 @@
                 </div>
                 <!-- /btn-group -->
                 
-                <input type="text" class="form-control" name="cari" placeholder="Search Data Kategori..">
+                <input type="text" class="form-control" name="keywoard" placeholder="Search Data Karyawan..">
               </div>
                 </div>
               </div>
@@ -34,7 +34,7 @@
 
           <div class="box box-danger">
             <div class="box-header">
-              <h3 class="box-title">Data Jabatan</h3>
+              <h3 class="box-title">Data Karyawan</h3>
             </div>
             
             <div class="box-body">
@@ -48,37 +48,48 @@
               <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">Masukkan Data Jabatan</h4>
+                <h4 class="modal-title">Masukkan Data Karyawan</h4>
               </div>
-              <form class="form-horizontal" action="/inputdata/store" method="post">
-              {{csrf_field()}}
+              <form class="form-horizontal" action="{{route('karyawan.store')}}" method="post">
+              @csrf
               <div class="box-body">
                 <div class="form-group">
-                  <label for="inputEmail3" class="col-sm-2 control-label">Nama</label>
+                  <label class="col-sm-2 control-label">Jabatan </label>
 
                   <div class="col-sm-10">
-                    <input type="text" class="form-control" id="inputEmail3" placeholder="Nama" name="nama">
+                      
+                      <select class="form-control" name="id_jabatan">
+                          @foreach($jabatan as $row){
+                          <option value="{{$row->id_jabatan}}">{{$row->nama_jabatan}}</option>
+                          }
+                          @endforeach
+                      </select>
                   </div>
                 </div>
                 <div class="form-group">
-                  <label for="inputEmail3" class="col-sm-2 control-label">Jenis Kelamin</label>
+                  <label for="inputPassword3" class="col-sm-2 control-label">Nama </label>
 
                   <div class="col-sm-10">
-                    <input type="text" class="form-control" id="inputEmail3" placeholder="Jenis Kelamin" name="jenis_kelamin">
+                    <input type="text" class="form-control" id="inputPassword3" placeholder="Nama" name="nama">
                   </div>
                 </div>
+
                 <div class="form-group">
-                  <label for="inputPassword3" class="col-sm-2 control-label">Jabatan</label>
+                  <label for="inputPassword3" class="col-sm-2 control-label">Email </label>
 
                   <div class="col-sm-10">
-                    <input type="text" class="form-control" id="inputPassword3" placeholder="Jabatan" name="jabatan">
+                    <input type="text" class="form-control" id="inputPassword3" placeholder="Email" name="email">
                   </div>
                 </div>
+
                 <div class="form-group">
-                  <div class="col-sm-offset-2 col-sm-10">
-                    
+                  <label for="inputPassword3" class="col-sm-2 control-label">Alamat </label>
+
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="inputPassword3" placeholder="Alamat" name="alamat">
                   </div>
                 </div>
+              
               </div>
               <!-- /.box-body -->
             
@@ -97,19 +108,33 @@
             <table class="table table-bordered table-striped">
                 <tr>
                 <th>Nama</th>
-                <th>Jenis Kelamin</th>
                 <th>Jabatan</th>
+                <th>Jumlah</th>
+                <th>Email</th>
+                <th>ALamat</th>
                 <th>Aksi</th>
                 </tr>
 
-                @foreach($categories as $data)
+                @foreach($karyawan as $karyawan)
                 <tr>
-                <td>{{$data->nama}}</td>
-                <td>{{$data->jenis_kelamin}}</td>
-                <td>{{$data->jabatan}}</td>
-                    <td>
-                      <a href="/edit_jabatan/edit/{{ $data->id }}">Edit</a> | 
-                        <a href="/hapus/destroy/{{ $data->id }}">Hapus</a>
+                <td>{{$karyawan->nama}}</td>
+                <td>{{$karyawan->get_jabatan->nama_jabatan}}</td>
+                <td>{{$karyawan->get_jabatan->jumlah}}</td>
+                <td>{{$karyawan->email}}</td>
+                <td>{{$karyawan->alamat}}</td>
+                     <td>
+                                <!--update -->
+                                <button class="btn btn-icon btn-sm btn-info" type="button">
+                                 <a style="color:white" href="{{ route('karyawan.edit',$karyawan->id_karyawan)}}"> Edit
+                                 </button></a> 
+                                <br>
+                                <!--delete -->
+                                <form action="{{ route('karyawan.destroy', $karyawan->id_karyawan)}}" method="post">
+                                      @csrf
+                                      @method('DELETE')
+                                <a onclick="return confirm('Are you sure?')"><button class="btn btn-icon btn-sm btn-danger" type="submit">
+                                Delete
+                                </button></a>
                     </td>
                 </tr>
                 @endforeach

@@ -5,36 +5,34 @@
     <!-- Content Header (Page header) -->
     <!-- Content Header (Page header) -->
     <section class="content-header">
-<h1>Daftar Menu</h1>
+<h1>Data Jabatan</h1>
 <br>
       
-    
-
           <div class="box box-info">
             <div class="box-header with-border">
-              <h3 class="box-title">Edit Daftar Menu</h3>
+              <h3 class="box-title">Edit Data Jabatan</h3>
             </div>
             <!-- /.box-header -->
             <!-- form start -->
-            @foreach($kategori as $p)
-            <form class="form-horizontal" action="/datakategori/update" method="post">
+            <form class="form-horizontal" action="{{ route('jabatan.update',$jabatan->id_jabatan)}}" method="post">
+              @method('PATCH')
                {{ csrf_field() }}
               <div class="box-body">
-                  <input type="hidden" name="id" value="{{ $p->id }}"> <br/>
                 <div class="form-group">
-                  <label for="inputEmail3" class="col-sm-2 control-label">Nama Kategori</label>
+                  <label for="inputEmail3" class="col-sm-2 control-label">Nama</label>
 
                   <div class="col-sm-10">
-                    <input type="text" class="form-control" name="kategori" value="{{ $p->kategori }}" placeholder="Nama Kategori">
+                    <input type="text" class="form-control" name="nama_jabatan" value="{{ $jabatan->nama_jabatan }}" placeholder="Nama">
                   </div>
                 </div>
                 <div class="form-group">
-                  <label for="inputPassword3" class="col-sm-2 control-label">Deskripsi</label>
+                  <label for="inputPassword3" class="col-sm-2 control-label">Jumlah</label>
 
                   <div class="col-sm-10">
-                    <input type="text" class="form-control" name="deskripsi" value="{{ $p->deskripsi }}" placeholder="Deskripsi">
+                    <input type="text" class="form-control" name="jumlah" value="{{ $jabatan->jumlah}}" placeholder="Jenis Kelamin">
                   </div>
                 </div>
+  
       
               </div>
               <!-- /.box-body -->
@@ -46,7 +44,6 @@
             </form>
           </div>
         </section>
-        @endforeach
 
     <!-- /.content -->
   

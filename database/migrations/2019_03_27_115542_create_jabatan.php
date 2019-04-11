@@ -14,10 +14,9 @@ class CreateJabatan extends Migration
     public function up()
     {
         Schema::create('jabatan', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->String('nama');
-            $table->String('jenis_kelamin');
-            $table->String('jabatan');
+            $table->bigIncrements('id_jabatan');
+            $table->String('nama_jabatan');
+            $table->integer('jumlah');
         });
     }
 

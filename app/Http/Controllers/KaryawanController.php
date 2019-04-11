@@ -4,28 +4,24 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\category;
-use App\menu;
+use App\karyawan;
+use App\jabatan;
 use Illuminate\Support\Facades\DB;
 
-class MenuController extends Controller
+class KaryawanController extends Controller
 {
     
     public function index(\Illuminate\Http\Request $request)
     {
-        $menu = menu::when($request->keyword, function ($query) use ($request) {
-        $query->where('kategori', 'like', "%{$request->keyword}%");
+        //tampil data jabatan
+        $jabatan = jabatan::all();
+        $karyawan = karyawan::with(['get_jabatan'])->when($request->keywoard, function ($query) use ($request){
+            $query->where('nama', 'like', "%{$request->keywoard}%");
         })->get();
 
-        return view('menu.menu', compact('menu'));
-
+        return view('karyawan.karyawan', compact('karyawan','jabatan'));
     }
 
-    public function search(Request $request)
-    {
-        $query = $request->input('cari');
-        $menu = menu::where('kategori', 'LIKE', '%' . $query . '%')->paginate(10);
-        return view('menu.result', compact('menu'));
-    }
     /**
      * Show the form for creating a new resource.
      *
@@ -43,12 +39,14 @@ class MenuController extends Controller
      */
     public function store(Request $request)
     {
-        DB::table('menu')->insert([
-            'kategori' => $request->kategori,
-            'deskripsi' => $request->deskripsi
-        ]);
-
-        return redirect('/menu');
+        $karyawan = new karyawan([
+            'id_jabatan' =>$request->id_jabatan,
+            'nama' => $request->nama,
+            'email' => $request->email,
+            'alamat' => $request->alamat
+            ]);
+            $karyawan->save();
+        return redirect('/karyawan');
     }
     /**
      * Display the specified resource.
@@ -68,8 +66,10 @@ class MenuController extends Controller
      */
     public function edit($id)
     {
-        $menu = DB::table('menu')->where('id',$id)->get();
-        return view('menu.edit',['menu' => $menu]);
+          //tampil data jabatan
+          $jabatan = jabatan::all();
+        $karyawan = karyawan::find($id);
+        return view('karyawan.edit',compact('karyawan','jabatan'));
     }
     /**
      * Update the specified resource in storage.
@@ -78,15 +78,15 @@ class MenuController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request)
+    public function update(Request $request,$id)
     {
-        DB::table('menu')->where('id',$request->id)->update([
-            'kategori' => $request->kategori,
-            'deskripsi' => $request->deskripsi
-             
-           
-        ]);
-            return redirect('/menu');
+        $karyawan = karyawan::find($id);
+        $karyawan->id_jabatan  = $request->get('id_jabatan');
+        $karyawan->nama  = $request->get('nama');
+        $karyawan->email = $request->get('email');
+        $karyawan->alamat = $request->get('alamat');
+        $karyawan->save();
+        return redirect('/karyawan');
     }
     /**
      * Remove the specified resource from storage.
@@ -96,8 +96,9 @@ class MenuController extends Controller
      */
     public function destroy($id)
     {
-        DB::table('menu')->where('id',$id)->delete();
-        return redirect('/menu');
+        $karyawan = karyawan::find($id);
+        $karyawan->delete();
+        return redirect('/karyawan');
     }
     
 }

@@ -14,9 +14,11 @@ class CreateKaryawan extends Migration
     public function up()
     {
         Schema::create('karyawan', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->String('karyawan');
-            $table->String('jumlah');
+            $table->bigIncrements('id_karyawan');
+            $table->integer('id_jabatan');
+            $table->String('nama');
+            $table->String('email');
+            $table->String('alamat');
         });
     }
 

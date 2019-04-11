@@ -4,28 +4,22 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\category;
-use App\menu;
+use App\jabatan;
+
 use Illuminate\Support\Facades\DB;
 
-class MenuController extends Controller
+class JabatanController extends Controller
 {
     
     public function index(\Illuminate\Http\Request $request)
     {
-        $menu = menu::when($request->keyword, function ($query) use ($request) {
-        $query->where('kategori', 'like', "%{$request->keyword}%");
+        $jabatan = jabatan::when($request->keyword, function ($query) use ($request) {
+        $query->where('nama_jabatan', 'like', "%{$request->keyword}%");
         })->get();
 
-        return view('menu.menu', compact('menu'));
-
+        return view('jabatan.jabatan', compact('jabatan'));
     }
 
-    public function search(Request $request)
-    {
-        $query = $request->input('cari');
-        $menu = menu::where('kategori', 'LIKE', '%' . $query . '%')->paginate(10);
-        return view('menu.result', compact('menu'));
-    }
     /**
      * Show the form for creating a new resource.
      *
@@ -43,12 +37,12 @@ class MenuController extends Controller
      */
     public function store(Request $request)
     {
-        DB::table('menu')->insert([
-            'kategori' => $request->kategori,
-            'deskripsi' => $request->deskripsi
-        ]);
-
-        return redirect('/menu');
+        $jabatan = new jabatan([
+            'nama_jabatan'   => $request->get('nama_jabatan'),
+            'jumlah'         => $request->get('jumlah')
+            ]);
+            $jabatan->save();
+            return redirect('/jabatan');
     }
     /**
      * Display the specified resource.
@@ -68,8 +62,9 @@ class MenuController extends Controller
      */
     public function edit($id)
     {
-        $menu = DB::table('menu')->where('id',$id)->get();
-        return view('menu.edit',['menu' => $menu]);
+        $jabatan = jabatan::find($id);
+        return view('jabatan.edit',compact('jabatan'));
+
     }
     /**
      * Update the specified resource in storage.
@@ -78,15 +73,13 @@ class MenuController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request)
+    public function update(Request $request, $id)
     {
-        DB::table('menu')->where('id',$request->id)->update([
-            'kategori' => $request->kategori,
-            'deskripsi' => $request->deskripsi
-             
-           
-        ]);
-            return redirect('/menu');
+        $jabatan = jabatan::find($id);
+        $jabatan->nama_jabatan   = $request->get('nama_jabatan');
+        $jabatan->jumlah        = $request->get('jumlah');
+        $jabatan->save();
+        return redirect('/jabatan');
     }
     /**
      * Remove the specified resource from storage.
@@ -96,8 +89,9 @@ class MenuController extends Controller
      */
     public function destroy($id)
     {
-        DB::table('menu')->where('id',$id)->delete();
-        return redirect('/menu');
+        $jabatan = jabatan::find($id);
+        $jabatan->delete();
+        return redirect('/jabatan');
     }
     
 }

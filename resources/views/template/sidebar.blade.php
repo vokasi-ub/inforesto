@@ -3,7 +3,7 @@
       <!-- Sidebar user panel -->
       <div class="user-panel">
         <div class="pull-left image">
-          <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+          <img src="{{asset('tema/dist/img/user2-160x160.jpg')}}" class="img-circle" alt="User Image">
         </div>
         <div class="pull-left info">
           <p>NIKE ERAWATY</p>
@@ -23,23 +23,32 @@
       <!-- /.search form -->
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu" data-widget="tree">
-        <li class="header">MAIN NAVIGATION</li>
+        <li class="header">INFORMATION</li>
         
-        <li class="treeview">
-          <a href="kategori2">
+        <li>
+          <a href="menu">
             <i class="fa fa-table"></i> <span>Daftar Menu</span> 
           </a>
         </li>
-        <li class="treeview">
-          <a href="kategori2">
+        <li>
+          <a href="karyawan">
             <i class="fa fa-table"></i> <span>Data Karyawan</span> 
           </a>
         </li>
-        <li class="treeview">
-          <a href="kategori2">
+        <li>
+          <a href="jabatan">
             <i class="fa fa-table"></i> <span>Data Jabatan</span> 
           </a>
         </li>
+
+        <i class="fa fa-table"></i> 
+            <a href="{{ route('logout') }}"onclick="event.preventDefault();document.getElementById('logout-form').submit();">
+                <i class="mdi-hardware-keyboard-tab fa fa-table"></i>{{ __('Logout') }}
+            </a>
+
+        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+            @csrf
+        </form>
         
       </ul>
     </section>
