@@ -100,8 +100,17 @@
                 <td>{{$menu->kategori}}</td>
                 <td>{{$menu->deskripsi}}</td>
                     <td>
-                      <a href="/menuedit/edit/{{ $menu->id }}">Edit</a> | 
-                        <a href="/delete/menu/{{ $menu->id }}">Hapus</a>
+                    <button class="btn btn-icon btn-sm btn-info" type="button">
+                                 <a style="color:white" href="{{ route('menu.edit',$menu->id)}}"> Edit
+                                 </button></a> 
+                                <br>
+                                <!--delete -->
+                                <form action="{{ route('menu.destroy', $menu->id)}}" method="post">
+                                      @csrf
+                                      @method('DELETE')
+                                <a onclick="return confirm('Are you sure?')"><button class="btn btn-icon btn-sm btn-danger" type="submit">
+                                Delete
+                                </button></a>
                     </td>
                 </tr>
                 @endforeach

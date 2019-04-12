@@ -39,11 +39,15 @@ class KaryawanController extends Controller
      */
     public function store(Request $request)
     {
+        $image = time().'.'.$request->image->getClientOriginalExtension();
+        $request->image->move(public_path('images'), $image);
+        
         $karyawan = new karyawan([
             'id_jabatan' =>$request->id_jabatan,
             'nama' => $request->nama,
             'email' => $request->email,
-            'alamat' => $request->alamat
+            'alamat' => $request->alamat,
+            'image' => $image
             ]);
             $karyawan->save();
         return redirect('/karyawan');
@@ -80,11 +84,13 @@ class KaryawanController extends Controller
      */
     public function update(Request $request,$id)
     {
+        
         $karyawan = karyawan::find($id);
         $karyawan->id_jabatan  = $request->get('id_jabatan');
         $karyawan->nama  = $request->get('nama');
         $karyawan->email = $request->get('email');
         $karyawan->alamat = $request->get('alamat');
+        $karyawan->image = $request->get('image');
         $karyawan->save();
         return redirect('/karyawan');
     }

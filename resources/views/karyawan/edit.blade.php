@@ -54,6 +54,14 @@
                     <input type="text" class="form-control" name="alamat" value="{{ $karyawan->alamat }}" placeholder="jumlah">
                   </div>
                 </div>
+
+                <div class="form-group">
+                  <label for="inputPassword3" class="col-sm-2 control-label">Gambar </label>
+
+                  <div class="col-sm-10">
+                    <input type="file" class="form-control" id="inputPassword3" placeholder="Gambar" name="image">
+                  </div>
+                </div>
       
               </div>
               <!-- /.box-body -->

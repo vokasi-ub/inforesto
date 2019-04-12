@@ -9,7 +9,7 @@ class karyawan extends Model
     protected $table = 'karyawan';
     protected $primaryKey = 'id_karyawan';
     protected $fillable = [
-        'id_jabatan', 'nama','email','alamat'
+        'id_jabatan', 'nama','email','alamat','image'
     ];
     public $timestamps = false;
 

@@ -50,7 +50,7 @@
                   <span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title">Masukkan Data Karyawan</h4>
               </div>
-              <form class="form-horizontal" action="{{route('karyawan.store')}}" method="post">
+              <form class="form-horizontal" action="{{route('karyawan.store')}}" enctype="multipart/form-data" method="post">
               @csrf
               <div class="box-body">
                 <div class="form-group">
@@ -89,6 +89,14 @@
                     <input type="text" class="form-control" id="inputPassword3" placeholder="Alamat" name="alamat">
                   </div>
                 </div>
+
+                <div class="form-group">
+                  <label for="inputPassword3" class="col-sm-2 control-label">Gambar </label>
+
+                  <div class="col-sm-10">
+                    <input type="file" class="form-control" id="inputPassword3" placeholder="Gambar" name="image">
+                  </div>
+                </div>
               
               </div>
               <!-- /.box-body -->
@@ -111,7 +119,8 @@
                 <th>Jabatan</th>
                 <th>Jumlah</th>
                 <th>Email</th>
-                <th>ALamat</th>
+                <th>Alamat</th>
+                <th>Gambar</th>
                 <th>Aksi</th>
                 </tr>
 
@@ -122,6 +131,7 @@
                 <td>{{$karyawan->get_jabatan->jumlah}}</td>
                 <td>{{$karyawan->email}}</td>
                 <td>{{$karyawan->alamat}}</td>
+                <td><img src="images/{{$karyawan->image}}" alt="" width="250px" heigth="250px"></td>
                      <td>
                                 <!--update -->
                                 <button class="btn btn-icon btn-sm btn-info" type="button">

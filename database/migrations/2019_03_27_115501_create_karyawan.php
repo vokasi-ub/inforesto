@@ -19,6 +19,7 @@ class CreateKaryawan extends Migration
             $table->String('nama');
             $table->String('email');
             $table->String('alamat');
+            $table->String('image');
         });
     }
 
